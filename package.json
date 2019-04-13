@@ -1,0 +1,50 @@
+{
+  "name": "news-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "NODE_ENV=test mocha --exit ./test/**/*.test.js",
+    "test-docker": "docker build -t news-api:test -f Dockerfile-test . && docker run news-api:test",
+    "coverage": "NODE_ENV=test nyc mocha -- --exit ./test/**/*.test.js",
+    "lint": "eslint src test"
+  },
+  "pre-commit": [
+    "lint"
+  ],
+  "pre-push": [
+    "test"
+  ],
+  "dependencies": {
+    "basic-auth": "^2.0.1",
+    "bluebird": "^3.5.3",
+    "body-parser": "^1.18.3",
+    "boom": "^7.3.0",
+    "express": "^4.16.4",
+    "helmet": "^3.16.0",
+    "lodash": "^4.17.11",
+    "mocha": "^6.0.2",
+    "mongoose": "^5.4.16"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^5.14.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-mocha": "^5.3.0",
+    "mongodb": "^3.1.13",
+    "mongodb-memory-server": "^4.2.1",
+    "nyc": "^13.3.0",
+    "pre-commit": "^1.2.2",
+    "pre-push": "^0.1.1",
+    "supertest": "^4.0.2"
+  },
+  "nyc": {
+    "temp-directory": "./coverage/.nyc_output",
+    "reporter": [
+      "html",
+      "text-summary"
+    ]
+  }
+}

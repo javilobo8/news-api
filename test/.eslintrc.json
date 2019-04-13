@@ -1,0 +1,11 @@
+{
+  "env": {
+    "mocha": true
+  },
+  "plugins": ["mocha"],
+  "rules": {
+    "no-unused-expressions": "off",
+    "no-underscore-dangle": "off",
+    "mocha/no-exclusive-tests": "error"
+  }
+}

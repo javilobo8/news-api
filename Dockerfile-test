@@ -1,0 +1,14 @@
+FROM node:8-slim
+
+ENV MONGOMS_VERSION='4.0.8'
+
+RUN mkdir /opt/app
+WORKDIR /opt/app
+
+COPY package.json yarn.lock ./
+
+RUN yarn install
+
+COPY . ./
+
+CMD ["npm", "test"]

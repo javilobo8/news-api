@@ -13,6 +13,12 @@ class TaskService {
     return this.TaskModel.find(filter);
   }
 
+  getWithTargets(filter = {}) {
+    return this.TaskModel.find(filter)
+      .populate('targets')
+      .exec();
+  }
+
   getById(taskId) {
     return this.TaskModel.findById(taskId).exec()
       .tap(maybeThrowTaskNotFound);

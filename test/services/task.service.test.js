@@ -81,4 +81,42 @@ describe('TaskService', () => {
       expect(task.updatedAt).to.exist;
     });
   });
+
+  describe('getById', () => {
+    const taskId = new models.mongoose.Types.ObjectId();
+    const baseTask = {
+      _id: taskId,
+      name: 'Task 1',
+      description: 'Task 1',
+      cron: '* * * * *',
+      active: true,
+      startOnCreate: false,
+      targets: [
+        new models.mongoose.Types.ObjectId(),
+      ],
+      emails: ['email@email.com'],
+    };
+
+    before(async () => {
+      await models.Task.create(baseTask);
+    });
+
+    after(() => models.Task.deleteMany());
+
+    it('should return one task', async () => {
+      const task = await taskService.getById(taskId);
+      expect(task._id).to.be.eql(baseTask._id);
+    });
+
+    it('should throw an error if target not found', async () => {
+      let error;
+      try {
+        await taskService.getById(new models.mongoose.Types.ObjectId());
+      } catch (err) {
+        error = err;
+      }
+      expect(error).to.be.instanceOf(Error);
+      expect(error.message).to.be.equal('Task not found');
+    });
+  });
 });

@@ -10,7 +10,7 @@ describe('TargetService', () => {
     expect(TargetService).to.exist;
   });
 
-  const targetService = new TargetService({ models });
+  const targetService = new TargetService();
 
   before(() => testDB.connect());
 

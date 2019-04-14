@@ -17,6 +17,11 @@ class TaskService {
     return this.TaskModel.findById(taskId).exec()
       .tap(maybeThrowTaskNotFound);
   }
+
+  deleteById(taskId) {
+    return this.getById(taskId)
+      .then((task) => task.remove());
+  }
 }
 
 function maybeThrowTaskNotFound(task) {

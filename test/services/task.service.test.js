@@ -108,10 +108,50 @@ describe('TaskService', () => {
       expect(task._id).to.be.eql(baseTask._id);
     });
 
-    it('should throw an error if target not found', async () => {
+    it('should throw an error if task not found', async () => {
       let error;
       try {
         await taskService.getById(new models.mongoose.Types.ObjectId());
+      } catch (err) {
+        error = err;
+      }
+      expect(error).to.be.instanceOf(Error);
+      expect(error.message).to.be.equal('Task not found');
+    });
+  });
+
+  describe('deleteById', () => {
+    const taskId = new models.mongoose.Types.ObjectId();
+    const baseTask = {
+      _id: taskId,
+      name: 'Task 1',
+      description: 'Task 1',
+      cron: '* * * * *',
+      active: true,
+      startOnCreate: false,
+      targets: [
+        new models.mongoose.Types.ObjectId(),
+      ],
+      emails: ['email@email.com'],
+    };
+
+    before(async () => {
+      await models.Task.create(baseTask);
+    });
+
+    after(() => models.Task.deleteMany());
+
+    it('should delete a task', async () => {
+      await taskService.deleteById(taskId);
+
+      const tasks = await models.Task.find();
+      expect(tasks).to.have.lengthOf(0);
+    });
+
+    it('should throw an error if task not found', async () => {
+      let error;
+      try {
+        await taskService.deleteById(new models.mongoose.Types.ObjectId());
       } catch (err) {
         error = err;
       }

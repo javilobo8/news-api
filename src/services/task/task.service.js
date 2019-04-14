@@ -5,6 +5,10 @@ class TaskService {
     this.TaskModel = models.Task;
   }
 
+  create(task) {
+    return new this.TaskModel(task).save();
+  }
+
   get(filter = {}) {
     return this.TaskModel.find(filter);
   }

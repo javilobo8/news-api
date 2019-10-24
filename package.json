@@ -25,7 +25,7 @@
     "helmet": "^3.16.0",
     "lodash": "^4.17.11",
     "mocha": "^6.0.2",
-    "mongoose": "^5.4.16"
+    "mongoose": "^5.7.5"
   },
   "devDependencies": {
     "chai": "^4.2.0",
